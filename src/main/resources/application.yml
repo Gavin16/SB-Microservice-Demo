@@ -1,0 +1,21 @@
+spring:
+  profiles:
+    active: dev
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/msdb
+    username: eta
+    password: stone
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+  #springboot 1.5.10版本上传文件大小设置方式
+  http:
+    multipart:
+      enabled: true
+      max-file-size: 6MB
+      max-request-size: 6MB
+
+
+
