@@ -1,15 +1,12 @@
 package com.example.demo.util;
 
+import com.alibaba.fastjson.JSONObject;
 import com.example.demo.domain.Result;
 import com.example.demo.enums.ExceptionEnum;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
-import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 import javax.crypto.Mac;
@@ -23,36 +20,15 @@ import java.util.*;
  * @author: 80002748
  * @date 2018/3/5 13:53
  */
-@Component
-//@ConfigurationProperties(prefix = "QcloudUtil")
 public class QcloudUtil {
 
-//    public static final long APPID = 1255609733;
-//    public static final String SECRETID = "AKID65wvoeIWmvz8kR6HE0b7Xrqpfcram9pc";
-//    public static final String BUCKETNAME = "etaservice";
-//    public static final String SECRETKEY = "oSLGd0caR7yrjkr8V1fCan9X2PrRKAHT";
-
-    @Value("${appid}")
-    private Long appid;
-
-    @Value("${secretId}")
-    private  String secretId;
-
-    @Value("${secretKey}")
-    private  String secretKey;
-
-    @Value("${bucketName}")
-    private  String bucketName;
-
-    @Autowired
-    private  RestTemplate restTemplate;
+    private  RestTemplate restTemplate = new RestTemplate();
 
     public static QcloudUtil getInstance(){
         return new QcloudUtil();
     }
 
-
-    public  Result postForOCR()throws Exception{
+    public  Result postForOCR(Long appid,String secretId,String secretKey,String bucketName)throws Exception{
         // 设置http header信息
         String url = "http://recognition.image.myqcloud.com/ocr/general";
         HttpHeaders requestHeaders = new HttpHeaders();
@@ -63,15 +39,16 @@ public class QcloudUtil {
 
         String authorization = getSign(appid,secretId,secretKey,bucketName,1000);
         requestHeaders.add("Authorization",authorization);
-        HttpEntity request = new HttpEntity (requestHeaders);
 
         // 添加请求内容 appId, bucket, image
         Map<String,Object> map = new HashMap<>();
         map.put("appid",appid);
         map.put("bucket",bucketName);
+        Object param = JSONObject.toJSON(map);
 
+        HttpEntity request = new HttpEntity (param,requestHeaders);
         // 调 OCR接口
-        HttpEntity<String> resp = restTemplate.exchange(url, HttpMethod.POST,request,String.class,map);
+        HttpEntity<String> resp = restTemplate.exchange(url, HttpMethod.POST,request,String.class);
         return ResultUtil.success(ExceptionEnum.SUCCESS,resp.getBody());
     }
 

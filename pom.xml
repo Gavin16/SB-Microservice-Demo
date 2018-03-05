@@ -53,10 +53,11 @@
 			<artifactId>mysql-connector-java</artifactId>
 		</dependency>
 
-		<!-- 腾讯云maven依赖 -->
+		<!-- 阿里 fastjson-->
 		<dependency>
-			<groupId>com.qcloud</groupId>
-			<artifactId>qcloud-sdk</artifactId>
+			<groupId>com.alibaba</groupId>
+			<artifactId>fastjson</artifactId>
+			<version>1.2.41</version>
 		</dependency>
 	</dependencies>
 
