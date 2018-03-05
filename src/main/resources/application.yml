@@ -4,7 +4,7 @@ spring:
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
     url: jdbc:mysql://127.0.0.1:3306/msdb
-    username: eta
+    username: root
     password: stone
   jpa:
     hibernate:
@@ -17,5 +17,8 @@ spring:
       max-file-size: 6MB
       max-request-size: 6MB
 
-
+appid: 1255609733
+secretId: AKID65wvoeIWmvz8kR6HE0b7Xrqpfcram9pc
+secretKey: oSLGd0caR7yrjkr8V1fCan9X2PrRKAHT
+bucketName: etaservice
 

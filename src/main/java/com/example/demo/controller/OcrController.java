@@ -1,23 +1,12 @@
 package com.example.demo.controller;
 
 import com.example.demo.domain.Result;
-import com.example.demo.enums.ExceptionEnum;
-import com.example.demo.util.ResultUtil;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
+import com.example.demo.util.QcloudUtil;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.RestTemplate;
-
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * @Title: SB-Service-Demo
- * @Package com.ocr.controller
  * @Description: 接收传入的图片文件
  * (1) 文件保存路径设置
  * (2) 文件大小限制设置  application.yml文件中配置
@@ -29,23 +18,14 @@ import java.util.Map;
 @RestController
 public class OcrController {
 
-    @Autowired
-    private RestTemplate  restTemplate;
-
+    /**
+     * 接收调用者的图片传参,并使用spring restTemplate 调用 qcloud OCR接口
+     * @throws Exception
+     * @return Result
+     */
     @GetMapping(value = "charRecog")
     public Result generalCharRecongnize() throws Exception {
-
-        // 使用spring restTemplate 调用 qcloud OCR接口
-        String url = "http://recognition.image.myqcloud.com/ocr/general";
-        HttpHeaders requestHeaders = new HttpHeaders();
-        requestHeaders.setContentType(MediaType.APPLICATION_JSON);
-        requestHeaders.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
-
-        Map<String,Object> map = new HashMap<>();
-
-        HttpEntity request = new HttpEntity (map,requestHeaders);
-        Map<String,Object> resMap = restTemplate.postForObject(url,request,Map.class);
-
-        return ResultUtil.success(ExceptionEnum.SUCCESS,resMap);
+        return QcloudUtil.getInstance().postForOCR();
     }
+
 }
