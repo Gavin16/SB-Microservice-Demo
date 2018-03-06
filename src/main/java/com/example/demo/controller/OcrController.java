@@ -55,7 +55,7 @@ public class OcrController {
     /**
      * 接收调用者的图片传参,并使用spring restTemplate 调用 qcloud OCR接口
      * 涉及：IO流,文件系统,服务器部署相关,RESTclient 文件传参
-     *
+     * http://blog.csdn.net/daniel7443/article/details/51620308
      * springmvc中文手册：http://download.csdn.net/download/zhang_hongli_li/9799725
      * @throws Exception
      * @return Result

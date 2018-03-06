@@ -16,7 +16,7 @@ spring:
       enabled: true
       max-file-size: 6MB
       max-request-size: 6MB
-#      location: /uploaded/image/
+      location: uploaded/image/
 
 # 生成签名字段
 appid: 1255609733

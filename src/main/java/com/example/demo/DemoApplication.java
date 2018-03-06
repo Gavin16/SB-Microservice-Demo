@@ -1,15 +1,12 @@
 package com.example.demo;
 
-import com.sun.deploy.net.HttpResponse;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.web.servlet.MultipartConfigFactory;
 import org.springframework.context.annotation.Bean;
-import org.springframework.http.client.ClientHttpRequestFactory;
-import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.web.client.RestTemplate;
-import sun.net.www.http.HttpClient;
 
-import javax.xml.ws.spi.http.HttpContext;
+import javax.servlet.MultipartConfigElement;
 
 @SpringBootApplication
 public class DemoApplication {
@@ -22,5 +19,12 @@ public class DemoApplication {
 	public RestTemplate getRestTemplate() {
 		RestTemplate restTemplate = new RestTemplate();
 		return restTemplate;
+	}
+
+	@Bean
+	MultipartConfigElement multipartConfigElement() {
+		MultipartConfigFactory factory = new MultipartConfigFactory();
+		factory.setLocation("/app/pttms/tmp");
+		return factory.createMultipartConfig();
 	}
 }
