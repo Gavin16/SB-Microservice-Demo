@@ -5,7 +5,6 @@ import com.example.demo.domain.Result;
 import com.example.demo.enums.ExceptionEnum;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.web.client.RestTemplate;
 
@@ -38,18 +37,21 @@ public class QcloudUtil {
 //        requestHeaders.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
 
         String authorization = getSign(appid,secretId,secretKey,bucketName,1000);
-        requestHeaders.add("Authorization",authorization);
+        requestHeaders.set("Authorization",authorization);
 
         // 添加请求内容 appId, bucket, image
         Map<String,Object> map = new HashMap<>();
         map.put("appid",appid);
         map.put("bucket",bucketName);
+        map.put("url","https://mc.qcloudimg.com/static/img/42c0b2c4f07d3815475e02d2201c9902/image.png");
+
         Object param = JSONObject.toJSON(map);
 
-        HttpEntity request = new HttpEntity (param,requestHeaders);
+        HttpEntity request = new HttpEntity (JSONObject.toJSONString(param),requestHeaders);
         // 调 OCR接口
-        HttpEntity<String> resp = restTemplate.exchange(url, HttpMethod.POST,request,String.class);
-        return ResultUtil.success(ExceptionEnum.SUCCESS,resp.getBody());
+//        HttpEntity<String> resp = restTemplate.exchange(url, HttpMethod.POST,request,String.class);
+        String response =  restTemplate.postForObject(url,request,String.class);
+        return ResultUtil.success(ExceptionEnum.SUCCESS,response);
     }
 
     /**

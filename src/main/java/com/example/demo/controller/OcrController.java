@@ -5,11 +5,12 @@ import com.alibaba.fastjson.JSONObject;
 import com.example.demo.domain.Person;
 import com.example.demo.domain.Result;
 import com.example.demo.enums.ExceptionEnum;
-import com.example.demo.repository.PersonRepository;
-import com.example.demo.util.QcloudUtil;
 import com.example.demo.util.ResultUtil;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,7 +19,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.lang.invoke.MethodType;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.util.Collections;
 
 /**
@@ -48,14 +51,51 @@ public class OcrController {
 
     private RestTemplate restTemplate = new RestTemplate();
 
+    private static Logger logger = LoggerFactory.getLogger(OcrController.class);
     /**
      * 接收调用者的图片传参,并使用spring restTemplate 调用 qcloud OCR接口
+     * 涉及：IO流,文件系统,服务器部署相关,RESTclient 文件传参
+     *
+     * springmvc中文手册：http://download.csdn.net/download/zhang_hongli_li/9799725
      * @throws Exception
      * @return Result
      */
     @PostMapping(value = "charRecog")
-    public Result generalCharRecongnize(@RequestParam(value = "myImage") MultipartFile file) throws Exception {
-        return QcloudUtil.getInstance().postForOCR(appid,secretId,secretKey,bucketName);
+    public Result generalCharRecongnize(@RequestParam("myImage") MultipartFile file) throws Exception {
+        if(file.isEmpty()){
+            logger.error("上传文件为空");
+            return ResultUtil.error(400,"上传文件为空");
+        }
+        String orgFileName = file.getOriginalFilename();
+        String extendName = StringUtils.substringAfter(orgFileName,".");
+        logger.info("原始文件名为："+orgFileName);
+
+        // 获取项目部署路径
+        String systemPath = System.getProperty("webapp.root");
+        logger.info("系统路径为："+systemPath);
+
+        // 文件直接保存在yml文件配置的目录下
+        BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(new File(orgFileName)));
+        out.write(file.getBytes());
+        out.flush();
+        out.close();
+
+        // 读取上传文件
+        FileSystemResource resource = new FileSystemResource(systemPath + orgFileName);
+
+        logger.info("读取文件名为："+resource.getFilename());
+
+        // 新文件名
+//        String newFileName = System.currentTimeMillis()+"."+extendName;
+        // 获取项目根路径
+//        String systemPath = System.getProperty("webapp.root");
+//        System.out.println("系统路径为："+systemPath);
+//        String newFilePath = "/uploaded/image/";
+//        File newFile = new File(newFilePath,newFileName);
+//        file.transferTo(newFile);
+
+        return ResultUtil.success(ExceptionEnum.SUCCESS,"文件保存成功");
+//        return QcloudUtil.getInstance().postForOCR(appid,secretId,secretKey,bucketName);
     }
 
     /**

@@ -4,19 +4,21 @@ spring:
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
     url: jdbc:mysql://127.0.0.1:3306/msdb
-    username: eta
+    username: root
     password: stone
   jpa:
     hibernate:
       ddl-auto: update
     show-sql: true
-  #springboot 1.5.10版本上传文件大小设置方式
+  #springboot 1.5.10版本上传文件配置方式
   http:
     multipart:
       enabled: true
       max-file-size: 6MB
       max-request-size: 6MB
+#      location: /uploaded/image/
 
+# 生成签名字段
 appid: 1255609733
 secretId: AKID65wvoeIWmvz8kR6HE0b7Xrqpfcram9pc
 secretKey: oSLGd0caR7yrjkr8V1fCan9X2PrRKAHT
