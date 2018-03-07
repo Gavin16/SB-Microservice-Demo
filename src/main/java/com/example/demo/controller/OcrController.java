@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.example.demo.domain.Person;
 import com.example.demo.domain.Result;
 import com.example.demo.enums.ExceptionEnum;
+import com.example.demo.util.QcloudUtil;
 import com.example.demo.util.ResultUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -37,17 +38,20 @@ import java.util.Collections;
 @RestController
 public class OcrController {
 
-    @Value("${appid}")
+    @Value("${qcloud.appid}")
     private Long appid;
 
-    @Value("${secretId}")
+    @Value("${qcloud.secretId}")
     private  String secretId;
 
-    @Value("${secretKey}")
+    @Value("${qcloud.secretKey}")
     private  String secretKey;
 
-    @Value("${bucketName}")
+    @Value("${qcloud.bucketName}")
     private  String bucketName;
+
+    @Value("${upload.tmpSavePath}")
+    private String tmpSavePath;
 
     private RestTemplate restTemplate = new RestTemplate();
 
@@ -75,27 +79,16 @@ public class OcrController {
         logger.info("系统路径为："+systemPath);
 
         // 文件直接保存在yml文件配置的目录下
-        BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(new File(orgFileName)));
+        BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(new File(tmpSavePath,orgFileName)));
         out.write(file.getBytes());
         out.flush();
         out.close();
 
         // 读取上传文件
         FileSystemResource resource = new FileSystemResource(systemPath + orgFileName);
-
         logger.info("读取文件名为："+resource.getFilename());
 
-        // 新文件名
-//        String newFileName = System.currentTimeMillis()+"."+extendName;
-        // 获取项目根路径
-//        String systemPath = System.getProperty("webapp.root");
-//        System.out.println("系统路径为："+systemPath);
-//        String newFilePath = "/uploaded/image/";
-//        File newFile = new File(newFilePath,newFileName);
-//        file.transferTo(newFile);
-
-        return ResultUtil.success(ExceptionEnum.SUCCESS,"文件保存成功");
-//        return QcloudUtil.getInstance().postForOCR(appid,secretId,secretKey,bucketName);
+        return QcloudUtil.getInstance().postForOCR(appid,secretId,secretKey,bucketName,tmpSavePath,orgFileName);
     }
 
     /**

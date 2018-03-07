@@ -21,10 +21,10 @@ public class DemoApplication {
 		return restTemplate;
 	}
 
-	@Bean
-	MultipartConfigElement multipartConfigElement() {
-		MultipartConfigFactory factory = new MultipartConfigFactory();
-		factory.setLocation("/app/pttms/tmp");
-		return factory.createMultipartConfig();
-	}
+//	@Bean
+//	MultipartConfigElement multipartConfigElement() {
+//		MultipartConfigFactory factory = new MultipartConfigFactory();
+//		factory.setLocation("upload/image");
+//		return factory.createMultipartConfig();
+//	}
 }

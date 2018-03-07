@@ -16,11 +16,17 @@ spring:
       enabled: true
       max-file-size: 6MB
       max-request-size: 6MB
-      location: uploaded/image/
+#      location: uploaded/image/
 
-# 生成签名字段
-appid: 1255609733
-secretId: AKID65wvoeIWmvz8kR6HE0b7Xrqpfcram9pc
-secretKey: oSLGd0caR7yrjkr8V1fCan9X2PrRKAHT
-bucketName: etaservice
+# 腾讯云接口调用 生成签名字段
+qcloud:
+  appid: 1255609733
+  secretId: AKID65wvoeIWmvz8kR6HE0b7Xrqpfcram9pc
+  secretKey: oSLGd0caR7yrjkr8V1fCan9X2PrRKAHT
+  bucketName: etaservice
+
+# 文件上传临时保存路径暂时使用绝对路径
+upload:
+  tmpSavePath: E:/wufangmin/ProjectData/upload/image
+
 

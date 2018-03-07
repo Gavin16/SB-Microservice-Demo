@@ -27,7 +27,18 @@ public class QcloudUtil {
         return new QcloudUtil();
     }
 
-    public  Result postForOCR(Long appid,String secretId,String secretKey,String bucketName)throws Exception{
+    /**
+     * 使用Spring RestTemplate 方式调用接口
+     * @param appid
+     * @param secretId
+     * @param secretKey
+     * @param bucketName
+     * @param imagePath
+     * @param imageFileName
+     * @return
+     * @throws Exception
+     */
+    public  Result postForOCR(Long appid,String secretId,String secretKey,String bucketName,String imagePath,String imageFileName)throws Exception{
         // 设置http header信息
         String url = "http://recognition.image.myqcloud.com/ocr/general";
         HttpHeaders requestHeaders = new HttpHeaders();
@@ -53,6 +64,7 @@ public class QcloudUtil {
         String response =  restTemplate.postForObject(url,request,String.class);
         return ResultUtil.success(ExceptionEnum.SUCCESS,response);
     }
+
 
     /**
      * 生成调用授权码
