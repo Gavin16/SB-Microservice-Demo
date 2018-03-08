@@ -1,5 +1,7 @@
 package com.example.demo;
 
+import com.alibaba.fastjson.JSON;
+import com.example.demo.configuration.JSONMapper;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.MultipartConfigFactory;
@@ -27,4 +29,10 @@ public class DemoApplication {
 //		factory.setLocation("upload/image");
 //		return factory.createMultipartConfig();
 //	}
+
+	@Bean
+	public JSONMapper getJSONMapper(){
+		return new JSONMapper();
+	}
+
 }

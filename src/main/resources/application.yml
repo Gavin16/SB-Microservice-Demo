@@ -27,6 +27,7 @@ qcloud:
 
 # 文件上传临时保存路径暂时使用绝对路径
 upload:
-  tmpSavePath: E:/wufangmin/ProjectData/upload/image
+  tmpSavePath: E:/wufangmin/ProjectData/upload/image/
+
 
 

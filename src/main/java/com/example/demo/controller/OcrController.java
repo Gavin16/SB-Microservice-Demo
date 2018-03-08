@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.example.demo.domain.Person;
 import com.example.demo.domain.Result;
 import com.example.demo.enums.ExceptionEnum;
+import com.example.demo.util.BaiduAPIUtil;
 import com.example.demo.util.QcloudUtil;
 import com.example.demo.util.ResultUtil;
 import org.apache.commons.lang3.StringUtils;
@@ -88,7 +89,8 @@ public class OcrController {
         FileSystemResource resource = new FileSystemResource(systemPath + orgFileName);
         logger.info("读取文件名为："+resource.getFilename());
 
-        return QcloudUtil.getInstance().postForOCR(appid,secretId,secretKey,bucketName,tmpSavePath,orgFileName);
+//        return QcloudUtil.getInstance().postForOCR(appid,secretId,secretKey,bucketName,tmpSavePath,orgFileName);
+        return BaiduAPIUtil.getInstance().getOcrResult(tmpSavePath,orgFileName);
     }
 
     /**
