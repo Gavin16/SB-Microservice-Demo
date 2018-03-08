@@ -39,17 +39,14 @@ import java.util.Collections;
 @RestController
 public class OcrController {
 
-    @Value("${qcloud.appid}")
-    private Long appid;
+    @Value("${baiduAPI.appId}")
+    private String appId;
 
-    @Value("${qcloud.secretId}")
-    private  String secretId;
+    @Value("${baiduAPI.apiKey}")
+    private String apiKey;
 
-    @Value("${qcloud.secretKey}")
-    private  String secretKey;
-
-    @Value("${qcloud.bucketName}")
-    private  String bucketName;
+    @Value("${baiduAPI.secretKey}")
+    private String secretKey;
 
     @Value("${upload.tmpSavePath}")
     private String tmpSavePath;
@@ -72,7 +69,7 @@ public class OcrController {
             return ResultUtil.error(400,"上传文件为空");
         }
         String orgFileName = file.getOriginalFilename();
-        String extendName = StringUtils.substringAfter(orgFileName,".");
+//        String extendName = StringUtils.substringAfter(orgFileName,".");
         logger.info("原始文件名为："+orgFileName);
 
         // 获取项目部署路径
@@ -89,8 +86,7 @@ public class OcrController {
         FileSystemResource resource = new FileSystemResource(systemPath + orgFileName);
         logger.info("读取文件名为："+resource.getFilename());
 
-//        return QcloudUtil.getInstance().postForOCR(appid,secretId,secretKey,bucketName,tmpSavePath,orgFileName);
-        return BaiduAPIUtil.getInstance().getOcrResult(tmpSavePath,orgFileName);
+        return BaiduAPIUtil.getInstance().getOcrResult(appId,apiKey,secretKey,tmpSavePath,orgFileName);
     }
 
     /**

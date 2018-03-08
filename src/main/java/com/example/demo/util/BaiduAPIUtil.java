@@ -7,6 +7,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 
 import java.util.HashMap;
 
@@ -31,12 +32,12 @@ public class BaiduAPIUtil {
      * @param fileName
      * @return
      */
-    public Result getOcrResult(String imagePath,String fileName){
+    public Result getOcrResult(String appId,String apiKey,String secretKey,String imagePath,String fileName){
         HashMap<String,String> param = new HashMap<>();
         param.put("detect_direction","true");
         param.put("probability","true");
 
-        AipOcr client = getAipocrInstance();
+        AipOcr client = new AipOcr(appId,apiKey,secretKey);
         JSONObject res = client.basicAccurateGeneral(imagePath+fileName ,param);
 
         Result result = getRecogResult(res);
@@ -45,16 +46,6 @@ public class BaiduAPIUtil {
         return result;
     }
 
-    /**
-     * appId,apiKey,secretKey, 用来生成 ApiOcr 客户端
-     * @return
-     */
-    private AipOcr getAipocrInstance(){
-        String appId = "10897554";
-        String apiKey = "XmVW5RZyC97F4VjONIrlSbDs";
-        String secretKey = "zfFGGsaXXdTS6lcR6zK9o0P40NBLX2Mx";
-        return new AipOcr(appId,apiKey,secretKey);
-    }
 
     /**
      * 调用结果转化为文本输出

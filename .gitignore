@@ -15,6 +15,9 @@ target/
 *.iml
 *.ipr
 
+# 本地 yml 文件不提交
+application-local.yml
+
 ### NetBeans ###
 nbproject/private/
 build/

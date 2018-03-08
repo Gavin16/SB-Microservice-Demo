@@ -1,11 +1,6 @@
 spring:
   profiles:
-    active: dev
-  datasource:
-    driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/msdb
-    username: root
-    password: stone
+    active: dev,local
   jpa:
     hibernate:
       ddl-auto: update
@@ -18,16 +13,12 @@ spring:
       max-request-size: 6MB
 #      location: uploaded/image/
 
-# 腾讯云接口调用 生成签名字段
-qcloud:
-  appid: 1255609733
-  secretId: AKID65wvoeIWmvz8kR6HE0b7Xrqpfcram9pc
-  secretKey: oSLGd0caR7yrjkr8V1fCan9X2PrRKAHT
-  bucketName: etaservice
 
-# 文件上传临时保存路径暂时使用绝对路径
-upload:
-  tmpSavePath: E:/wufangmin/ProjectData/upload/image/
+
+
+
+
+
 
 
 

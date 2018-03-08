@@ -51,14 +51,12 @@ public class QcloudUtil {
         requestHeaders.set("Authorization",authorization);
 
         // 添加请求内容 appId, bucket, image
-        Map<String,Object> map = new HashMap<>();
-        map.put("appid",appid);
-        map.put("bucket",bucketName);
-        map.put("url","https://mc.qcloudimg.com/static/img/42c0b2c4f07d3815475e02d2201c9902/image.png");
+        JSONObject content = new JSONObject();
+        content.put("appid",appid);
+        content.put("bucket",bucketName);
+        content.put("url","https://mc.qcloudimg.com/static/img/42c0b2c4f07d3815475e02d2201c9902/image.png");
 
-        Object param = JSONObject.toJSON(map);
-
-        HttpEntity request = new HttpEntity (JSONObject.toJSONString(param),requestHeaders);
+        HttpEntity request = new HttpEntity (content,requestHeaders);
         // 调 OCR接口
 //        HttpEntity<String> resp = restTemplate.exchange(url, HttpMethod.POST,request,String.class);
         String response =  restTemplate.postForObject(url,request,String.class);

@@ -18,11 +18,11 @@ public class WebAppRootListener implements ServletContextListener {
 
     public void contextInitialized(ServletContextEvent event) {
         WebUtils.setWebAppRootSystemProperty(event.getServletContext());
-        System.out.println("set WebAppRootSystemProperty");
+//        System.out.println("set WebAppRootSystemProperty");
     }
 
     public void contextDestroyed(ServletContextEvent event) {
         WebUtils.removeWebAppRootSystemProperty(event.getServletContext());
-        System.out.println("remove WebAppRootSystemProperty");
+//        System.out.println("remove WebAppRootSystemProperty");
     }
 }
