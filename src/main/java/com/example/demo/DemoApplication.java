@@ -1,14 +1,10 @@
 package com.example.demo;
 
-import com.alibaba.fastjson.JSON;
 import com.example.demo.configuration.JSONMapper;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.web.servlet.MultipartConfigFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.client.RestTemplate;
-
-import javax.servlet.MultipartConfigElement;
 
 @SpringBootApplication
 public class DemoApplication {

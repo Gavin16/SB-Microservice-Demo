@@ -5,9 +5,11 @@ import com.example.demo.domain.Result;
 import com.example.demo.enums.ExceptionEnum;
 import com.example.demo.repository.PersonRepository;
 import com.example.demo.util.ResultUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.web.bind.annotation.*;
-
 
 @RestController
 public class PersonController {
@@ -26,12 +28,18 @@ public class PersonController {
         return ResultUtil.success(ExceptionEnum.SUCCESS);
     }
 
+    private Logger logger = LoggerFactory.getLogger(PersonController.class);
+
+    // 使用springframework 中Environment 获取当前环境配置
+    @Autowired
+    Environment env;
+
     /**
      * 区分@RequestBody @RequestParam @PathVariable 三个参数注解的使用
      *
      * @param person
      * @return
-     * @RequestBody ：传json参数使用
+     * @RequestBody ： JSON参数转对象
      * @RequestParam : url参数或者form表单数据时使用(格式：？name=tom&age=11)
      * @PathVariable : 将URL中的占位符参数绑定到控制器处理方法的入参(格式：/page/123  将路径某一部分转化为参数)
      */
@@ -47,6 +55,10 @@ public class PersonController {
 
     @PostMapping(value = "getById")
     public Result queryPersonById(@RequestParam Integer id) {
+
+        String[] profiles = env.getActiveProfiles();
+        String dbUrl = env.getProperty("spring.datasource.url");
+        logger.info("profiles:"+profiles[0]+",database url:"+dbUrl);
         return ResultUtil.success(ExceptionEnum.SUCCESS,personRepository.findOne(id));
     }
 

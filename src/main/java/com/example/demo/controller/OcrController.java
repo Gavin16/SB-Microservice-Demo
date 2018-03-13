@@ -10,7 +10,6 @@ import com.example.demo.util.ResultUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -62,32 +61,17 @@ public class OcrController {
      */
     @PostMapping(value = "charRecog")
     public Result generalCharRecongnize(@RequestParam("myImage") MultipartFile file) throws Exception {
-        if(file.isEmpty()){
-            logger.error("上传文件为空");
-            return ResultUtil.error(400,"上传文件为空");
-        }
+        // 获取文件名
         String orgFileName = file.getOriginalFilename();
-//        String extendName = StringUtils.substringAfter(orgFileName,".");
-        logger.info("原始文件名为："+orgFileName);
-
-        // 获取项目部署路径
-        String systemPath = System.getProperty("webapp.root");
-        logger.info("系统路径为："+systemPath);
-
-        // 文件直接保存在yml文件配置的目录下
-        BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(new File(tmpSavePath,orgFileName)));
-        out.write(file.getBytes());
-        out.flush();
-        out.close();
-
-        // 读取上传文件
-        FileSystemResource resource = new FileSystemResource(systemPath + orgFileName);
-        logger.info("读取文件名为："+resource.getFilename());
-
+        // 保存上传图片
+        saveUploadImage(file,orgFileName);
+        // 调用百度通用印刷体识别接口
         return BaiduAPIUtil.getInstance().getOcrResult(appId,apiKey,secretKey,tmpSavePath,orgFileName);
     }
 
+
     /**
+     * 测试调用方式是否有问题
      * 若同样的方式 addPersonTest方法可以调通,则generalCharRecongnize方法 bad request是由于参数不全导致
      * @return
      */
@@ -116,6 +100,33 @@ public class OcrController {
         // 使用JSON.parseObject 方法可以将 String形式的对象转化为 DTO
         Person p = JSON.parseObject(jsonObject.get("data").toString(),Person.class);
         return ResultUtil.success(ExceptionEnum.SUCCESS,p);
+    }
+
+    /**
+     *  保存上传图片
+     * @param file
+     * @param orgFileName
+     * @return
+     * @throws Exception
+     */
+    private Result saveUploadImage(MultipartFile file,String orgFileName) throws Exception{
+        if(file.isEmpty()){
+            logger.error("上传文件为空");
+            return ResultUtil.error(400,"上传文件为空");
+        }
+
+        logger.info("原始文件名为："+orgFileName);
+
+        // 获取项目部署路径
+        String systemPath = System.getProperty("webapp.root");
+        logger.info("系统路径为："+systemPath);
+
+        // 文件直接保存在yml文件配置的目录下
+        BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(new File(tmpSavePath,orgFileName)));
+        out.write(file.getBytes());
+        out.flush();
+        out.close();
+        return null;
     }
 
 }
