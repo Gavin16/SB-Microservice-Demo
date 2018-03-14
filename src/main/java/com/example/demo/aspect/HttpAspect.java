@@ -1,6 +1,7 @@
 package com.example.demo.aspect;
 
 import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,7 +26,10 @@ public class HttpAspect {
 
     private static Logger logger = LoggerFactory.getLogger(HttpAspect.class);
 
-    @Pointcut("execution(public * com.example.demo.controller.*.*(..))")
+    // 使用within指示器修改切点对应的匹配类型
+    // 切点表达式中也可以指定bean
+//    @Pointcut("execution(public * com.example.demo.controller.*.*(..)) && within(com.example.demo.*.*) && bean('ocrController')")
+    @Pointcut("execution(public * com.example.demo.controller.*.*(..)) && within(com.example.demo.*.*)")
     public void log() {
 
     }
@@ -55,4 +59,28 @@ public class HttpAspect {
     public void doAfterReturing(Object object) {
         logger.info("response={}", object.toString());
     }
+
+//    @Around("log()") // 前置+后置通知 改为环绕通知
+//    public void doAround(ProceedingJoinPoint proceedingJoinPoint,JoinPoint joinPoint){
+//        try {
+//            ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+//            HttpServletRequest request = attributes.getRequest();
+//
+//            logger.info("url={}", request.getRequestURI());
+//
+//            logger.info("method={}", request.getMethod());
+//
+//            logger.info("ip={}", request.getRemoteAddr());
+//
+//            logger.info("class_method={}", joinPoint.getSignature().getDeclaringType() + "." + joinPoint.getSignature().getName());
+//
+//            logger.info("args={}", joinPoint.getArgs());
+//
+//            proceedingJoinPoint.proceed();
+//
+//            logger.info("doAfter method executing");
+//        } catch (Throwable e) {
+//            logger.error("around advice exception"+e);
+//        }
+//    }
 }

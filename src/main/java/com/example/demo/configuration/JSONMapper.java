@@ -3,6 +3,7 @@ package com.example.demo.configuration;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import org.springframework.stereotype.Component;
 
 /**
  * @Title: demo

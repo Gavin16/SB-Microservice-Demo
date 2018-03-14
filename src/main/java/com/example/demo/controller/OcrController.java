@@ -6,10 +6,13 @@ import com.example.demo.domain.Person;
 import com.example.demo.domain.Result;
 import com.example.demo.enums.ExceptionEnum;
 import com.example.demo.util.BaiduAPIUtil;
+import com.example.demo.util.FileUploadUtil;
 import com.example.demo.util.ResultUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -36,21 +39,23 @@ import java.util.Collections;
 @RestController
 public class OcrController {
 
-    @Value("${baiduAPI.appId}")
+    @Value("${baiduAPI.ocr.appId}")
     private String appId;
 
-    @Value("${baiduAPI.apiKey}")
+    @Value("${baiduAPI.ocr.apiKey}")
     private String apiKey;
 
-    @Value("${baiduAPI.secretKey}")
+    @Value("${baiduAPI.ocr.secretKey}")
     private String secretKey;
 
     @Value("${upload.tmpSavePath}")
     private String tmpSavePath;
 
+    @Autowired
+    private FileUploadUtil fileUploadUtil;
+
     private RestTemplate restTemplate = new RestTemplate();
 
-    private static Logger logger = LoggerFactory.getLogger(OcrController.class);
     /**
      * 接收调用者的图片传参,并使用spring restTemplate 调用 qcloud OCR接口
      * 涉及：IO流,文件系统,服务器部署相关,RESTclient 文件传参
@@ -64,7 +69,7 @@ public class OcrController {
         // 获取文件名
         String orgFileName = file.getOriginalFilename();
         // 保存上传图片
-        saveUploadImage(file,orgFileName);
+        fileUploadUtil.saveUploadImage(file,orgFileName,tmpSavePath);
         // 调用百度通用印刷体识别接口
         return BaiduAPIUtil.getInstance().getOcrResult(appId,apiKey,secretKey,tmpSavePath,orgFileName);
     }
@@ -100,33 +105,6 @@ public class OcrController {
         // 使用JSON.parseObject 方法可以将 String形式的对象转化为 DTO
         Person p = JSON.parseObject(jsonObject.get("data").toString(),Person.class);
         return ResultUtil.success(ExceptionEnum.SUCCESS,p);
-    }
-
-    /**
-     *  保存上传图片
-     * @param file
-     * @param orgFileName
-     * @return
-     * @throws Exception
-     */
-    private Result saveUploadImage(MultipartFile file,String orgFileName) throws Exception{
-        if(file.isEmpty()){
-            logger.error("上传文件为空");
-            return ResultUtil.error(400,"上传文件为空");
-        }
-
-        logger.info("原始文件名为："+orgFileName);
-
-        // 获取项目部署路径
-        String systemPath = System.getProperty("webapp.root");
-        logger.info("系统路径为："+systemPath);
-
-        // 文件直接保存在yml文件配置的目录下
-        BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(new File(tmpSavePath,orgFileName)));
-        out.write(file.getBytes());
-        out.flush();
-        out.close();
-        return null;
     }
 
 }
