@@ -14,7 +14,7 @@ import java.io.FileOutputStream;
  * @Title: demo
  * @Package com.example.demo.util
  * @Description: ${todo}
- * @author: 80002748
+ * @author: Minsky
  * @date 2018/3/14 12:34
  */
 @Component

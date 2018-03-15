@@ -4,7 +4,7 @@ package com.example.demo.enums;
  * @Title: SBService
  * @Package com.demo.enums
  * @Description: ${todo}
- * @author: 80002748
+ * @author: Minsky
  * @date 2018/2/27 14:44
  */
 public enum ExceptionEnum {

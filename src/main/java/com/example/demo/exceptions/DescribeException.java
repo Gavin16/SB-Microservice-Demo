@@ -7,7 +7,7 @@ import com.example.demo.enums.ExceptionEnum;
  * @Title: SBService
  * @Package com.demo.handle
  * @Description: ${todo}
- * @author: 80002748
+ * @author: Minsky
  * @date 2018/2/27 15:14
  */
 public class DescribeException extends RuntimeException {

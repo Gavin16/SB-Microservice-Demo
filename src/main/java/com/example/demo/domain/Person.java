@@ -8,7 +8,7 @@ import javax.persistence.Id;
  * @Title: SBService
  * @Package com.demo.domain
  * @Description: ${todo}
- * @author: 80002748
+ * @author: Minsky
  * @date 2018/2/28 9:16
  */
 @Entity

@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * @Title: SBService
  * @Package: com.demo.handle
  * @Description: 项目抛出的指定类型的异常都会经过ExceptionHandle处理,处理返回Result类型的结果
- * @author: 80002748
+ * @author: Minsky
  * @date 2018/2/27 15:35
  *
  */

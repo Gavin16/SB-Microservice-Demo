@@ -16,7 +16,7 @@ import java.util.*;
  * @Title: demo
  * @Package com.example.demo.util
  * @Description: ${todo}
- * @author: 80002748
+ * @author: Minsky
  * @date 2018/3/5 13:53
  */
 public class QcloudUtil {

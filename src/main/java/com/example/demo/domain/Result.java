@@ -4,7 +4,7 @@ package com.example.demo.domain;
  * @Title: SBService
  * @Package: com.demo.domain
  * @Description:
- * @author: 80002748
+ * @author: Minsky
  * @date: 2018/2/27 13:58
  */
 public class Result {

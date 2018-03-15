@@ -32,7 +32,7 @@ import java.util.Collections;
  * (1) 文件保存路径设置
  * (2) 文件大小限制设置  application.yml文件中配置
  * (3) 文件格式问题
- * @author: 80002748
+ * @author: Minsky
  * @date 2018/3/2 14:43
  */
 

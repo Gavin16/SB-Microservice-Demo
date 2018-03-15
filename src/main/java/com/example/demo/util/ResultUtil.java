@@ -8,7 +8,7 @@ import com.example.demo.enums.ExceptionEnum;
  * @Title: SBService
  * @Package com.demo.util
  * @Description: ${todo}
- * @author: 80002748
+ * @author: Minsky
  * @date 2018/2/27 14:24
  */
 public class ResultUtil {

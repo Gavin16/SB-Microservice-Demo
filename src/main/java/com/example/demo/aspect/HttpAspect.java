@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletRequest;
  * @Title: SBService
  * @Package: com.demo.aspect
  * @Description:
- * @author: 80002748
+ * @author: Minsky
  * @date 2018/2/27 17:49
  */
 

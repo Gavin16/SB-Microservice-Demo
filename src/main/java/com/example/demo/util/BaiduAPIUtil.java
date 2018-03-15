@@ -19,7 +19,7 @@ import java.util.Map;
  * @Title: demo
  * @Package com.example.demo.util
  * @Description: ${todo}
- * @author: 80002748
+ * @author: Minsky
  * @date 2018/3/8 15:15
  */
 public class BaiduAPIUtil {
