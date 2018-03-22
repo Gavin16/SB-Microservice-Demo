@@ -4,7 +4,7 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
-    show-sql: true
+    show-sql: false
   #springboot 1.5.10版本上传文件配置方式
   http:
     multipart:

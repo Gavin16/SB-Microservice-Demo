@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.web.bind.annotation.*;
 
+
 @RestController
 public class PersonController {
 
@@ -34,12 +35,14 @@ public class PersonController {
     @Autowired
     Environment env;
 
+
+
     /**
      * 区分@RequestBody @RequestParam @PathVariable 三个参数注解的使用
      *
      * @param person
      * @return
-     * @RequestBody ： JSON参数转对象
+     * @RequestBody ：传json参数使用
      * @RequestParam : url参数或者form表单数据时使用(格式：？name=tom&age=11)
      * @PathVariable : 将URL中的占位符参数绑定到控制器处理方法的入参(格式：/page/123  将路径某一部分转化为参数)
      */
@@ -54,6 +57,7 @@ public class PersonController {
     }
 
     @PostMapping(value = "getById")
+    @ResponseBody
     public Result queryPersonById(@RequestParam Integer id) {
 
         String[] profiles = env.getActiveProfiles();
