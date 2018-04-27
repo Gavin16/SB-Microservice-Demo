@@ -1,0 +1,13 @@
+# redis连接配置
+spring:
+  redis:
+    database:
+    host: 47.106.148.168
+    password:
+    pool:
+      max-active: 100
+      max-wait: 5000
+      max-idle: 20
+    port: 6379
+    # 超时时间设置为和等待时间一样
+    timeout: 5000

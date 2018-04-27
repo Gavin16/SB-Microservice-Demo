@@ -1,0 +1,13 @@
+服务器端设置：
+(1) redis 设置开启远程访问 -- conf和防火墙配置
+    * 不同版本配置文件的路径及文件名
+
+客户端
+jedis连接redis,redis配置文件,
+redis数据类型,redis常用操作,
+封装RedisUtil,实现常用方法set,get,del,expire,ttl方法,
+    redis配置放properties文件,注意多线程和使用完后关闭连接
+    (参考StringRedisTemplate 做一个小只的JedisTemplate )
+
+
+
