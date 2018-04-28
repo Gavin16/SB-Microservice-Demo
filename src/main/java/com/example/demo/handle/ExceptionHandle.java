@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * @Description: 项目抛出的指定类型的异常都会经过ExceptionHandle处理,处理返回Result类型的结果
  * @author: Minsky
  * @date 2018/2/27 15:35
+ *  使用ControllerAdvice注解标注的类下定义的有 @ExceptionHandler方法会作用在含@RequestMapping注解的方法上
  *
  */
 @ControllerAdvice
