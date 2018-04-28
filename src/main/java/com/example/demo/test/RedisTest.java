@@ -1,6 +1,6 @@
 package com.example.demo.test;
 
-import com.example.demo.service.RedisService;
+import com.example.demo.util.RedisUtil;
 
 /**
  * @Title: SB-Microservice-Demo
@@ -11,11 +11,11 @@ import com.example.demo.service.RedisService;
  */
 public class RedisTest {
 
-    static RedisService service = new RedisService();
-
     public static void main(String[]args){
-        service.hset("user","name","admin");
-        String name = service.hget("user","name");
-        System.out.println(name);
+        RedisUtil redisUtil = RedisUtil.getInstance();
+        redisUtil.hset("user","name","Tom");
+        redisUtil.hset("user","password","123456");
+        redisUtil.hset("user","openid","321423742868");
+        System.out.println(redisUtil.hget("user","openid"));
     }
 }
